@@ -1,15 +1,69 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+}
+
 #logo-agrovictoria {
-  max-width: 150px;
+  max-width: 120px;
 }
 
-#barcode {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: auto;
+.card-carnet {
+  width: 300px;
+  height: 480px;
+  background: #ffffff;
+  border: 2px solid #198754;
+  border-radius: 16px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  overflow: hidden;
+  text-align: center;
 }
 
-#qrcode {
-  display: block;
-  margin: auto;
+.carnet-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.carnet-header {
+  background-color: #198754;
+  color: white;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.carnet-body {
+  flex: 1;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.carnet-foto {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 2px solid #ccc;
+}
+
+.carnet-info h5 {
+  margin-bottom: 5px;
+  font-size: 1.1rem;
+}
+
+.carnet-info p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.carnet-footer {
+  background-color: #f8f9fa;
+  padding: 8px;
+  font-size: 0.9rem;
+  color: #333;
+  border-top: 1px solid #ccc;
 }
