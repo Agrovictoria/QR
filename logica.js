@@ -12,7 +12,7 @@ function generarQR() {
   }
 
   QRCode.toCanvas(qrCanvas, dni, {
-    width: Math.min(window.innerWidth * 0.9, 400),
+    width: 280, // tamaño reducido sin deformar
     margin: 1
   }, function (error) {
     if (error) {
