@@ -1,5 +1,3 @@
-// logica.js actualizado
-
 function generarQR() {
   const dni = document.getElementById('dni').value.trim();
   const qrCanvas = document.getElementById('qrcode');
@@ -54,7 +52,7 @@ function mostrarFormularioCarnet() {
 function generarCarnet() {
   const nombre = document.getElementById('nombre').value.trim();
   const cargo = document.getElementById('cargo').value.trim();
-  const dni = document.getElementById('dni').value.trim();
+  const dni = document.getElementById('dni-carnet').value.trim();
   const fotoInput = document.getElementById('foto');
   const preview = document.getElementById('preview-carnet');
   const carnet = document.getElementById('carnet');

@@ -1,30 +1,51 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Generador de Carné - Agrovictoria</title>
+  <title>Agrovictoria - Herramientas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="estilos.css" />
 </head>
-<body class="bg-light">
-  <header class="text-center py-4 border-bottom">
-    <img src="multimedia/logo_agrovictoria.png" id="logo-agrovictoria" alt="Logo Agrovictoria" />
-    <h2 class="mt-3">Aplicación Agrovictoria</h2>
-  </header>
 
+<body class="bg-light">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <img src="multimedia/logo_agrovictoria.png" alt="Logo" width="40" class="d-inline-block align-text-top">
+        Agrovictoria
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#" onclick="mostrarFormularioCarnet()">Crear Carné de Identidad</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenido Principal -->
   <div class="container py-4">
     <div class="row justify-content-center">
       <div class="col-md-6">
         <div class="card shadow p-4">
-          <h5 class="mb-3">Herramientas:</h5>
-          <input type="text" class="form-control mb-2" id="dni" placeholder="Ingrese DNI (8 dígitos)" />
-          <div class="d-flex gap-2 mb-3">
-            <button type="button" onclick="generarQR()" class="btn btn-success w-100">Generar QR</button>
-            <button type="button" onclick="generarBarra()" class="btn btn-warning w-100">Generar Código de Barras</button>
+          <h5 class="text-center mb-3">Generador de Códigos</h5>
+          <div class="mb-3">
+            <label for="dni" class="form-label">Ingrese su DNI</label>
+            <input type="number" class="form-control" id="dni" placeholder="Ej: 75841523" required minlength="8"
+              maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
+
           </div>
-          <div class="d-grid">
-            <button type="button" onclick="mostrarFormularioCarnet()" class="btn btn-primary">Crear Carné de Identidad</button>
+          <div class="d-flex gap-2">
+            <button type="button" onclick="generarQR()" class="btn btn-success w-100 shadow">Generar QR</button>
+            <button type="button" onclick="generarBarra()" class="btn btn-warning w-100 shadow">Generar Código de
+              Barras</button>
           </div>
           <div class="mt-4 text-center">
             <canvas id="qrcode" class="d-none"></canvas>
@@ -34,31 +55,44 @@
       </div>
     </div>
 
+    <!-- Formulario Carné -->
     <div id="formulario-carnet" class="row justify-content-center mt-5 d-none">
       <div class="col-md-6">
         <div class="card shadow p-4">
-          <form id="form-carnet" onsubmit="event.preventDefault(); generarCarnet();">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="mb-0">Carné de Identidad</h5>
+            <button class="btn btn-close"
+              onclick="document.getElementById('formulario-carnet').classList.add('d-none')"></button>
+          </div>
+          <form onsubmit="event.preventDefault(); generarCarnet();">
+            <div class="mb-3">
+              <label for="dni-carnet" class="form-label">DNI del Trabajador</label>
+              <input type="number" class="form-control" id="dni-carnet" placeholder="Ej: 75841523" required
+                minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
+
+            </div>
             <div class="mb-3">
               <label for="nombre" class="form-label">Nombre completo</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Ej: Ryan Rodriguez" required />
+              <input type="text" class="form-control" id="nombre" placeholder="Ej: Valyan Toguez" required />
             </div>
             <div class="mb-3">
               <label for="cargo" class="form-label">Labor o cargo</label>
-              <input type="text" class="form-control" id="cargo" placeholder="Ej: Supervisor de Campo" required />
+              <input type="text" class="form-control" id="cargo" placeholder="Ej: Vid" required />
             </div>
             <div class="mb-3">
               <label for="foto" class="form-label">Subir foto</label>
               <input type="file" class="form-control" id="foto" accept="image/*" required />
             </div>
             <div class="d-grid">
-              <button type="submit" class="btn btn-primary">Generar y Descargar Carné</button>
+              <button type="submit" class="btn btn-primary shadow">Generar y Descargar Carné</button>
             </div>
           </form>
         </div>
       </div>
     </div>
 
-    <div class="row justify-content-center mt-5">
+    <!-- Carnet Preview -->
+    <div class="row justify-content-center mt-4">
       <div class="col-md-4">
         <div id="preview-carnet" class="card-carnet mx-auto d-none">
           <div class="carnet-container" id="carnet">
@@ -69,8 +103,8 @@
                 <h5 id="carnet-nombre"></h5>
                 <p id="carnet-cargo"></p>
                 <p id="carnet-dni"></p>
-                <canvas id="carnet-qr"></canvas>
               </div>
+              <canvas id="carnet-qr"></canvas>
             </div>
             <div class="carnet-footer">Carné de Identificación</div>
           </div>
@@ -85,4 +119,5 @@
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <script src="logica.js"></script>
 </body>
+
 </html>
