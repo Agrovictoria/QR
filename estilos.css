@@ -1,9 +1,6 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
-}
-
-#logo-agrovictoria {
-  max-width: 120px;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f9f9f9;
 }
 
 .card-carnet {
@@ -12,17 +9,30 @@ body {
   background: #ffffff;
   border: 2px solid #198754;
   border-radius: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+  position: relative;
   text-align: center;
+  overflow: hidden;
 }
 
 .carnet-container {
-  display: flex;
-  flex-direction: column;
   height: 100%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.carnet-watermark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  opacity: 0.07;
+  z-index: 0;
 }
 
 .carnet-header {
@@ -31,50 +41,60 @@ body {
   padding: 10px;
   font-weight: bold;
   font-size: 1.2rem;
+  border-radius: 8px 8px 0 0;
+  position: relative;
+  z-index: 1;
 }
 
 .carnet-body {
-  flex: 1;
   padding: 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 10px;
+  position: relative;
+  z-index: 1;
 }
 
 .carnet-foto {
   width: 120px;
   height: 120px;
-  border-radius: 8px;
+  border-radius: 10px;
   object-fit: cover;
-  border: 2px solid #ccc;
+  border: 2px solid #198754;
 }
 
 .carnet-info h5 {
   margin: 0;
   font-size: 1.1rem;
+  color: #198754;
 }
 
 .carnet-info p {
   margin: 0;
   font-size: 0.95rem;
-  color: #555;
+  color: #444;
 }
 
 .carnet-footer {
-  background-color: #f8f9fa;
+  background-color: #f1f1f1;
   padding: 8px;
   font-size: 0.9rem;
   color: #333;
   border-top: 1px solid #ccc;
+  position: relative;
+  z-index: 1;
 }
 
-#carnet-qr {
-  margin-top: 10px;
-  width: 100px;
-  height: 100px;
+.is-invalid {
+  border-color: #dc3545;
+}
+
+.is-invalid:focus {
+  box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+input.is-invalid ~ .invalid-feedback {
   display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
