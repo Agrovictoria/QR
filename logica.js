@@ -45,11 +45,16 @@ function generarBarra() {
   });
 }
 
-function mostrarFormularioCarnet() {
-  document.getElementById('formulario-carnet').classList.remove('d-none');
-}
+// Lógica del Carné en modal
+const modalCarnet = document.getElementById('modalCarnet');
+modalCarnet.addEventListener('hidden.bs.modal', () => {
+  document.getElementById('formCarnet').reset();
+  document.getElementById('preview-carnet').classList.add('d-none');
+  document.getElementById('btnDescargar').classList.add('d-none');
+});
 
-function generarCarnet() {
+document.getElementById('formCarnet').addEventListener('submit', function (event) {
+  event.preventDefault();
   const nombre = document.getElementById('nombre').value.trim();
   const cargo = document.getElementById('cargo').value.trim();
   const dni = document.getElementById('dni-carnet').value.trim();
@@ -61,6 +66,7 @@ function generarCarnet() {
   const carnetCargo = document.getElementById('carnet-cargo');
   const carnetDni = document.getElementById('carnet-dni');
   const carnetQr = document.getElementById('carnet-qr');
+  const btnDescargar = document.getElementById('btnDescargar');
 
   if (!fotoInput.files[0]) {
     alert('Por favor, sube una foto.');
@@ -82,16 +88,20 @@ function generarCarnet() {
         console.error("Error generando QR del carnet:", error);
       } else {
         preview.classList.remove('d-none');
-        setTimeout(() => {
-          html2canvas(carnet).then(canvas => {
-            const link = document.createElement('a');
-            link.download = `carnet_${nombre.replace(/\s+/g, '_')}.png`;
-            link.href = canvas.toDataURL();
-            link.click();
-          });
-        }, 500);
+        btnDescargar.classList.remove('d-none');
       }
     });
   };
   reader.readAsDataURL(fotoInput.files[0]);
-}
+});
+
+document.getElementById('btnDescargar').addEventListener('click', () => {
+  const carnet = document.getElementById('carnet');
+  const nombre = document.getElementById('nombre').value.trim();
+  html2canvas(carnet).then(canvas => {
+    const link = document.createElement('a');
+    link.download = `carnet_${nombre.replace(/\s+/g, '_')}.png`;
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+});

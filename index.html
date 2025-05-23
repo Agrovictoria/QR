@@ -23,7 +23,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <a class="nav-link" href="#" onclick="mostrarFormularioCarnet()">Crear Carné de Identidad</a>
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalCarnet">Crear Carné de Identidad</a>
           </li>
         </ul>
       </div>
@@ -38,14 +38,11 @@
           <h5 class="text-center mb-3">Generador de Códigos</h5>
           <div class="mb-3">
             <label for="dni" class="form-label">Ingrese su DNI</label>
-            <input type="number" class="form-control" id="dni" placeholder="Ej: 75841523" required minlength="8"
-              maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
-
+            <input type="number" class="form-control" id="dni" placeholder="Ej: 75841523" required minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
           </div>
           <div class="d-flex gap-2">
             <button type="button" onclick="generarQR()" class="btn btn-success w-100 shadow">Generar QR</button>
-            <button type="button" onclick="generarBarra()" class="btn btn-warning w-100 shadow">Generar Código de
-              Barras</button>
+            <button type="button" onclick="generarBarra()" class="btn btn-warning w-100 shadow">Generar Código de Barras</button>
           </div>
           <div class="mt-4 text-center">
             <canvas id="qrcode" class="d-none"></canvas>
@@ -55,58 +52,50 @@
       </div>
     </div>
 
-    <!-- Formulario Carné -->
-    <div id="formulario-carnet" class="row justify-content-center mt-5 d-none">
-      <div class="col-md-6">
-        <div class="card shadow p-4">
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <h5 class="mb-0">Carné de Identidad</h5>
-            <button class="btn btn-close"
-              onclick="document.getElementById('formulario-carnet').classList.add('d-none')"></button>
+    <!-- Modal Carné -->
+    <div class="modal fade" id="modalCarnet" tabindex="-1" aria-labelledby="modalCarnetLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalCarnetLabel">Formulario Carné</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
-          <form onsubmit="event.preventDefault(); generarCarnet();">
-            <div class="mb-3">
-              <label for="dni-carnet" class="form-label">DNI del Trabajador</label>
-              <input type="number" class="form-control" id="dni-carnet" placeholder="Ej: 75841523" required
-                minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
-
-            </div>
-            <div class="mb-3">
-              <label for="nombre" class="form-label">Nombre completo</label>
-              <input type="text" class="form-control" id="nombre" placeholder="Ej: Valyan Toguez" required />
-            </div>
-            <div class="mb-3">
-              <label for="cargo" class="form-label">Labor o cargo</label>
-              <input type="text" class="form-control" id="cargo" placeholder="Ej: Vid" required />
-            </div>
-            <div class="mb-3">
-              <label for="foto" class="form-label">Subir foto</label>
-              <input type="file" class="form-control" id="foto" accept="image/*" required />
-            </div>
-            <div class="d-grid">
-              <button type="submit" class="btn btn-primary shadow">Generar y Descargar Carné</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-
-    <!-- Carnet Preview -->
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-4">
-        <div id="preview-carnet" class="card-carnet mx-auto d-none">
-          <div class="carnet-container" id="carnet">
-            <div class="carnet-header">AGROVICTORIA</div>
-            <div class="carnet-body">
-              <img id="carnet-foto" src="" alt="Foto" class="carnet-foto" />
-              <div class="carnet-info">
-                <h5 id="carnet-nombre"></h5>
-                <p id="carnet-cargo"></p>
-                <p id="carnet-dni"></p>
+          <div class="modal-body">
+            <form id="formCarnet">
+              <div class="mb-3">
+                <label for="dni-carnet" class="form-label">DNI del Trabajador</label>
+                <input type="number" class="form-control" id="dni-carnet" placeholder="Ej: 75841523" required minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);" />
               </div>
-              <canvas id="carnet-qr"></canvas>
+              <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" class="form-control" id="nombre" placeholder="Ej: Valyan Toguez" required />
+              </div>
+              <div class="mb-3">
+                <label for="cargo" class="form-label">Labor o cargo</label>
+                <input type="text" class="form-control" id="cargo" placeholder="Ej: Vid" required />
+              </div>
+              <div class="mb-3">
+                <label for="foto" class="form-label">Subir foto</label>
+                <input type="file" class="form-control" id="foto" accept="image/*" required />
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Generar Carné</button>
+            </form>
+            <div id="preview-carnet" class="card-carnet mx-auto d-none mt-4">
+              <div class="carnet-container" id="carnet">
+                <div class="carnet-header">AGROVICTORIA</div>
+                <div class="carnet-body">
+                  <img id="carnet-foto" src="" alt="Foto" class="carnet-foto" />
+                  <div class="carnet-info">
+                    <h5 id="carnet-nombre"></h5>
+                    <p id="carnet-cargo"></p>
+                    <p id="carnet-dni"></p>
+                  </div>
+                  <canvas id="carnet-qr"></canvas>
+                </div>
+                <div class="carnet-footer">Carné de Identificación</div>
+              </div>
             </div>
-            <div class="carnet-footer">Carné de Identificación</div>
+            <button id="btnDescargar" class="btn btn-outline-success w-100 mt-3 d-none">Descargar Carné</button>
           </div>
         </div>
       </div>
