@@ -67,15 +67,15 @@
             <form id="formCarnet">
               <div class="mb-3">
                 <label for="dni-carnet" class="form-label">DNI</label>
-                <input type="number" class="form-control" id="dni-carnet" required minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);">
+                <input type="number" class="form-control" placeholder="Ej:12345678"  id="dni-carnet" required minlength="8" maxlength="8" oninput="if(this.value.length>8)this.value=this.value.slice(0,8);">
               </div>
               <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre Completo</label>
-                <input type="text" class="form-control" id="nombre" required>
+                <input type="text" class="form-control" placeholder="Ej:Valyan Toguez" id="nombre" required >
               </div>
               <div class="mb-3">
                 <label for="cargo" class="form-label">Labor o Cargo</label>
-                <input type="text" class="form-control" id="cargo" required>
+                <input type="text" class="form-control"placeholder="Ej:Vid" id="cargo" required>
               </div>
               <div class="mb-3">
                 <label for="foto" class="form-label">Foto</label>
