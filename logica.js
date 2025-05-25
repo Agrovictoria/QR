@@ -58,6 +58,7 @@ function generarBarra() {
 window.addEventListener('DOMContentLoaded', () => {
   const formCarnet = document.getElementById('formCarnet');
   const btnDescargar = document.getElementById('btnDescargar');
+  const btnInstalar = document.getElementById('btnInstalar');
 
   formCarnet.addEventListener('submit', function (event) {
     event.preventDefault();
@@ -125,5 +126,23 @@ window.addEventListener('DOMContentLoaded', () => {
       const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
       bsCollapse.hide();
     });
+  });
+
+  // PWA instalación manual
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    btnInstalar.classList.remove('d-none');
+  });
+
+  btnInstalar?.addEventListener('click', () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(() => {
+        deferredPrompt = null;
+        btnInstalar.classList.add('d-none');
+      });
+    }
   });
 });
