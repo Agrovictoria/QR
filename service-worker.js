@@ -1,4 +1,6 @@
-const CACHE_NAME = 'agrovictoria-cache-v1';
+const CACHE_VERSION = '2025-05-25';
+const CACHE_NAME = `agrovictoria-cache-${CACHE_VERSION}`;
+
 const FILES_TO_CACHE = [
   './',
   './index.html',
@@ -22,13 +24,11 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((keyList) =>
-      Promise.all(
-        keyList.map((key) => {
-          if (key !== CACHE_NAME) return caches.delete(key);
-        })
-      )
-    )
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
+      );
+    })
   );
   self.clients.claim();
 });
